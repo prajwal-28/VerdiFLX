@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en" style="">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>VerdiFLX Pellets | Strategic Sales Intelligence</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+        // Funnel Calculator Logic
+        function updateEmailFunnel() {
+            const sent = parseFloat(document.getElementById('email-sent').value) || 0;
+            const replies = parseFloat(document.getElementById('email-replies').value) || 0;
+            const positive = parseFloat(document.getElementById('email-positive').value) || 0;
+
+            const replyRate = sent > 0 ? (replies / sent) * 100 : 0;
+            const positiveRate = replies > 0 ? (positive / replies) * 100 : 0;
+
+            document.getElementById('email-reply-rate').textContent = replyRate.toFixed(1) + '%';
+            document.getElementById('email-positive-rate').textContent = positiveRate.toFixed(1) + '%';
+        }
+
+        function updateLinkedInFunnel() {
+            const sent = parseFloat(document.getElementById('li-sent').value) || 0;
+            const replies = parseFloat(document.getElementById('li-replies').value) || 0;
+            const positive = parseFloat(document.getElementById('li-positive').value) || 0;
+
+            const replyRate = sent > 0 ? (replies / sent) * 100 : 0;
+            const positiveRate = replies > 0 ? (positive / replies) * 100 : 0;
+
+            document.getElementById('li-reply-rate').textContent = replyRate.toFixed(1) + '%';
+            document.getElementById('li-positive-rate').textContent = positiveRate.toFixed(1) + '%';
+        }
+
+        document.getElementById('email-sent').addEventListener('input', updateEmailFunnel);
+        document.getElementById('email-replies').addEventListener('input', updateEmailFunnel);
+        document.getElementById('email-positive').addEventListener('input', updateEmailFunnel);
+
+        document.getElementById('li-sent').addEventListener('input', updateLinkedInFunnel);
+        document.getElementById('li-replies').addEventListener('input', updateLinkedInFunnel);
+        document.getElementById('li-positive').addEventListener('input', updateLinkedInFunnel);
+
+        updateEmailFunnel();
+        updateLinkedInFunnel();
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --light-shadow: -6px -6px 12px rgba(255, 255, 255, 0.8);
+            --dark-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1);
+            --inset-light: inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+            --inset-dark: inset 4px 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .neumorphic-flat {
+            background: #f6f9ff;
+            box-shadow: var(--dark-shadow), var(--light-shadow);
+        }
+
+        .neumorphic-recessed {
+            background: #f6f9ff;
+            box-shadow: var(--inset-dark), var(--inset-light);
+        }
+
+        .neumorphic-button:active {
+            box-shadow: var(--inset-dark), var(--inset-light);
+            transform: scale(0.98);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f6f9ff;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #dee3ea;
+            border-radius: 10px;
+        }
+
+        .tech-expand-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin-top 0.3s ease-out;
+            opacity: 0;
+        }
+
+        .tech-expand-content.active {
+            max-height: 200px;
+            opacity: 1;
+            margin-top: 1.5rem;
+        }
+
+        .funnel-step::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #dee3ea;
+        }
+
+        .funnel-step:last-child::after {
+            display: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating-card {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#dde4e6",
+                        "surface-dim": "#d5dae1",
+                        "surface": "#f6f9ff",
+                        "on-background": "#171c21",
+                        "on-secondary-container": "#f3f3ff",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#2a3340",
+                        "on-surface": "#171c21",
+                        "on-error": "#ffffff",
+                        "primary": "#181f21",
+                        "surface-container-high": "#e4e9f0",
+                        "surface-container-low": "#eff4fb",
+                        "surface-container-highest": "#dee3ea",
+                        "outline-variant": "#c3c7c8",
+                        "tertiary-fixed-dim": "#bec7d7",
+                        "tertiary": "#151e2a",
+                        "secondary-container": "#0762ff",
+                        "inverse-primary": "#c1c8ca",
+                        "on-secondary": "#ffffff",
+                        "background": "#f6f9ff",
+                        "primary-container": "#2d3436",
+                        "on-primary-container": "#959c9f",
+                        "inverse-on-surface": "#ecf1f8",
+                        "on-primary": "#ffffff",
+                        "outline": "#747879",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#586062",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#00174b",
+                        "on-surface-variant": "#434749",
+                        "on-primary-fixed": "#161d1f",
+                        "secondary-fixed": "#dbe1ff",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#003ea8",
+                        "on-tertiary-fixed-variant": "#3e4755",
+                        "surface-bright": "#f6f9ff",
+                        "tertiary-fixed": "#dae3f4",
+                        "surface-container": "#e9eef5",
+                        "on-primary-fixed-variant": "#41484a",
+                        "secondary-fixed-dim": "#b4c5ff",
+                        "on-tertiary-fixed": "#131c28",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#004ccc",
+                        "inverse-surface": "#2b3136",
+                        "primary-fixed-dim": "#c1c8ca",
+                        "on-tertiary-container": "#929bab",
+                        "surface-variant": "#dee3ea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "headline-xl": ["Montserrat"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+
+        // Funnel Calculator Logic
+        function updateEmailFunnel() {
+            const sent = parseFloat(document.getElementById('email-sent').value) || 0;
+            const replies = parseFloat(document.getElementById('email-replies').value) || 0;
+            const positive = parseFloat(document.getElementById('email-positive').value) || 0;
+
+            const replyRate = sent > 0 ? (replies / sent) * 100 : 0;
+            const positiveRate = replies > 0 ? (positive / replies) * 100 : 0;
+
+            document.getElementById('email-reply-rate').textContent = replyRate.toFixed(1) + '%';
+            document.getElementById('email-positive-rate').textContent = positiveRate.toFixed(1) + '%';
+        }
+
+        function updateLinkedInFunnel() {
+            const sent = parseFloat(document.getElementById('li-sent').value) || 0;
+            const replies = parseFloat(document.getElementById('li-replies').value) || 0;
+            const positive = parseFloat(document.getElementById('li-positive').value) || 0;
+
+            const replyRate = sent > 0 ? (replies / sent) * 100 : 0;
+            const positiveRate = replies > 0 ? (positive / replies) * 100 : 0;
+
+            document.getElementById('li-reply-rate').textContent = replyRate.toFixed(1) + '%';
+            document.getElementById('li-positive-rate').textContent = positiveRate.toFixed(1) + '%';
+        }
+
+        document.getElementById('email-sent').addEventListener('input', updateEmailFunnel);
+        document.getElementById('email-replies').addEventListener('input', updateEmailFunnel);
+        document.getElementById('email-positive').addEventListener('input', updateEmailFunnel);
+
+        document.getElementById('li-sent').addEventListener('input', updateLinkedInFunnel);
+        document.getElementById('li-replies').addEventListener('input', updateLinkedInFunnel);
+        document.getElementById('li-positive').addEventListener('input', updateLinkedInFunnel);
+
+        updateEmailFunnel();
+        updateLinkedInFunnel();
+    </script>
+</head>
+
+<body class="bg-surface font-body-md text-on-surface">
+    <!-- Top Navigation Bar -->
+    <header
+        class="w-full sticky top-0 z-50 bg-surface shadow-[6px_6px_12px_rgba(0,0,0,0.1),-6px_-6px_12px_rgba(255,255,255,0.8)]">
+        <div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto">
+            <div class="font-headline-md text-headline-md font-bold text-primary">VerdiFLX</div>
+            <nav class="hidden md:flex gap-8">
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent transition-all duration-200"
+                    href="#target">The Target</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent transition-all duration-200"
+                    href="#hit-list">Hit List</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent transition-all duration-200"
+                    href="#tech">Tech Stack</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent transition-all duration-200"
+                    href="#routine">Routine</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent transition-all duration-200"
+                    href="#dashboard">Dashboard</a>
+            </nav>
+        </div>
+    </header>
+    <main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop space-y-32 py-20">
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden transition-all duration-700 ease-out opacity-100 translate-y-0"
+            id="hero">
+            <div class="grid md:grid-cols-2 gap-gutter items-center">
+                <div class="space-y-6">
+                    <h1 class="font-headline-xl text-headline-xl text-primary leading-tight font-bold tracking-tight">
+                        VerdiFLX Pellets <br />
+                        <span class="text-secondary">Sales Intelligence</span>
+                    </h1>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
+                        A data-driven methodology for high-stakes B2B sales in the circular economy. Precision outreach
+                        meets strategic compliance matching for auto OEMs and home appliance leaders.
+                    </p>
+                </div>
+                <div
+                    class="floating-card neumorphic-flat rounded-xl overflow-hidden aspect-video relative group border border-outline-variant/30 hover:border-secondary/30 transition-all duration-500">
+                    <img alt="VerdiFLX pellets float"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        src="https://lh3.googleusercontent.com/aida/AP1WRLuX1ZTSgXEcQ_rKFV8gLj015_VaynBDNvR_pwbHGNPdrTptBJ2Yx_m5Q79alhYSyeTXbXOSgm_byFrYzg0I6_xfLjO-VD3G953RRv0fCWmbSYemd8YAwY9lUUHtX5M9q6VQz8-EFDVI07jPtQAsxmPzlULMTpLLxch56tmbUkL56hSU51HZtHSeS74HHYd0iTn50s-4F2os7xntkQ1e5-iDrQFkVvIRnbUU9dWTPifJrYYJcg087q1ojLqu_qpzYn847qcQXZeEmw0" />
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent opacity-80 group-hover:opacity-40 transition-all duration-500">
+                    </div>
+                    <div
+                        class="absolute bottom-4 left-4 right-4 bg-surface/95 backdrop-blur-md p-4 rounded-lg border border-outline-variant/30 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                        <p class="text-xs text-on-surface-variant font-semibold">VerdiFLX pellets, engineered from
+                            post-consumer multilayer plastic packaging.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- The Target (ICP) -->
+        <section class="space-y-12 transition-all duration-700 ease-out opacity-100 translate-y-0" id="target">
+            <div class="text-center">
+                <h2 class="font-headline-lg text-headline-lg text-primary">The Target (ICP)</h2>
+                <p class="text-on-surface-variant mt-2">Ideal Customer Profile: Hero MotoCorp</p>
+            </div>
+            <div class="flex justify-center">
+                <div class="p-10 rounded-xl max-w-3xl w-full transition-all duration-300 group neumorphic-flat"
+                    id="procurement-card">
+                    <div class="flex flex-col md:flex-row gap-10 items-center">
+                        <div
+                            class="w-32 h-32 rounded-full neumorphic-recessed flex items-center justify-center shrink-0 overflow-hidden border border-outline-variant/30 group-hover:border-secondary transition-colors duration-300">
+                            <img src="https://lh3.googleusercontent.com/aida/AP1WRLsC3a-C-trhAImv6hVH8U0hxfe26kd5Kxc6HxDLfIBxM99hlADf-2kc1ita48HWh9Pzejk5geQ911j2ztJqCU_7-8sdMQiunwHXBcrP3WAPs8ehbWY-DwNnhrOSsg5h0WqffTQhM8M_RmwBPEsp4fM3hFgPWEVb79nwjc9GgPDganq06VTNiGIu68CeLaMgPylAjv7w1O3gfK8xhc474zB7z0oNV60-lrLIVBwnsu09DMGkT62qj5DQAbcNWcyLvvY3r4PZpk535oQ"
+                                alt="Ram Kuppuswamy" class="w-full h-full object-cover rounded-full" />
+                        </div>
+                        <div class="space-y-4 flex-1">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="font-headline-md text-headline-md text-primary font-bold">Ram Kuppuswamy
+                                    </h3>
+                                    <p class="text-secondary font-semibold text-sm tracking-wide">Head of Procurement —
+                                        Hero MotoCorp</p>
+                                </div>
+                                <span
+                                    class="material-symbols-outlined text-on-surface-variant transition-all duration-300 mt-1 cursor-pointer hover:text-primary hover:scale-110 p-2 -mr-2 rounded-full hover:bg-surface-container-high"
+                                    id="expand-icon" style="transform: rotate(0deg);">expand_more</span>
+                            </div>
+                            <p class="font-body-md text-body-md">Hero MotoCorp (India's largest two-wheeler OEM) uses
+                                vast PP/PE content in its body panels, fairings, and fuel tank covers.</p>
+                            <div class="grid grid-cols-2 gap-4 pt-4">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-8 border-t border-outline-variant space-y-6 overflow-hidden hidden"
+                        id="procurement-details">
+                        <div class="neumorphic-recessed p-6 rounded-lg">
+                            <h4 class="font-label-md text-primary mb-2">Suitability Rationale</h4>
+                            <p class="text-body-md text-on-surface-variant">Hero uses vast PP/PE content in its bikes;
+                                switching to VerdiFLX (a drop-in recycled PP with 50% post-consumer recycled content)
+                                lets Hero meet new recycled-content regulations and bolster its green branding – all
+                                without retooling existing production. By adopting VerdiFLX, auto manufacturers can meet
+                                India's tightening recycled-content mandates (e.g. 40% recycled plastic in packaging and
+                                products by 2026) and global ELV targets while lowering carbon footprint without
+                                performance loss.</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 hidden">
+                            <div class="flex items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-secondary">mail</span>
+                                <span class="text-label-sm">j.doe@utilityprocure.com</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-secondary">link</span>
+                                <span class="text-label-sm">/in/jdoe-procurement</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-secondary">call</span>
+                                <span class="text-label-sm">+44 20 7946 0123</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- The Hit List -->
+        <section class="space-y-12 transition-all duration-700 ease-out opacity-100 translate-y-0" id="hit-list">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-6">
+                <div>
+                    <h2 class="font-headline-lg text-headline-lg text-primary">The Hit List</h2>
+                    <p class="text-on-surface-variant">Target Companies &amp; Decision-Makers</p>
+                </div>
+                <div class="neumorphic-recessed flex rounded-full p-1" id="priority-filters">
+                    <button
+                        class="px-6 py-2 text-label-sm font-semibold rounded-full transition-all filter-btn neumorphic-flat text-primary"
+                        data-filter="all">All</button>
+                    <button
+                        class="px-6 py-2 text-label-sm font-semibold rounded-full transition-all filter-btn text-on-surface-variant"
+                        data-filter="high">High</button>
+                    <button
+                        class="px-6 py-2 text-label-sm font-semibold rounded-full transition-all filter-btn text-on-surface-variant"
+                        data-filter="medium">Medium</button>
+                    <button
+                        class="px-6 py-2 text-label-sm font-semibold rounded-full transition-all filter-btn text-on-surface-variant"
+                        data-filter="low">Strategic</button>
+                </div>
+            </div>
+            <div class="neumorphic-flat rounded-xl overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse" id="hit-list-table">
+                        <thead>
+                            <tr class="bg-surface-container-low border-b border-outline-variant">
+                                <th class="p-6 font-label-md">Company</th>
+                                <th class="p-6 font-label-md">Priority</th>
+                                <th class="p-6 font-label-md">Target Job Title</th>
+                                <th class="p-6 font-label-md">Components &amp; Justification</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-surface-container">
+                            <!-- High Priority -->
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="high" style="display: table-row;">
+                                <td class="p-6 font-semibold">Bajaj Auto</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-error-container text-on-error-container">High</span>
+                                </td>
+                                <td class="p-6">Director – Supply Chain &amp; Procurement</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Motorcycles, scooters and
+                                        auto-rickshaws (plastic panels, dashboards, mudguards)</div>
+                                    <div class="mt-1 text-on-surface-variant">Bajaj's large plastic part volumes can be
+                                        made more sustainable by VerdiFLX, supporting its brand image and compliance
+                                        with stricter plastics mandates while leaving manufacturing processes unchanged
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="high" style="display: table-row;">
+                                <td class="p-6 font-semibold">Motherson Sumi Systems</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-secondary-container text-on-secondary-container">High</span>
+                                </td>
+                                <td class="p-6">Chief Procurement Officer</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Mirror housings, bumpers,
+                                        lighting and interior modules made of plastic (Major Tier-1 auto parts supplier)
+                                    </div>
+                                    <div class="mt-1 text-on-surface-variant">As a key supplier to all automakers,
+                                        Motherson can decarbonize its supply chain by using VerdiFLX pellets, satisfying
+                                        OEMs' demand for recycled-content parts and aligning with global
+                                        recycled-plastics requirements</div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="high" style="display: table-row;">
+                                <td class="p-6 font-semibold">Nilkamal Limited</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-error-container text-on-error-container">High</span>
+                                </td>
+                                <td class="p-6">Head of Procurement</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Injection-molded chairs, tables,
+                                        storage crates (Leading plastic furniture maker)</div>
+                                    <div class="mt-1 text-on-surface-variant">Nilkamal can adopt VerdiFLX pellets (100%
+                                        recycled polyolefin) for its PP furniture and crates to cut carbon footprint and
+                                        meet India's plastic-waste rules, all while retaining the strength and quality
+                                        of virgin plastic</div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="high" style="display: table-row;">
+                                <td class="p-6 font-semibold">LG Electronics India</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-secondary-container text-on-secondary-container">High</span>
+                                </td>
+                                <td class="p-6">Vice President – Supply Chain</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Washing machines, ACs, TVs with
+                                        plastic housings and internal parts (Home appliances and electronics
+                                        manufacturer)</div>
+                                    <div class="mt-1 text-on-surface-variant">LG's global sustainability targets and
+                                        India's recycled-content mandates make VerdiFLX an ideal substitute for virgin
+                                        plastic in appliances, lowering carbon footprint and enabling ESG storytelling
+                                        without changing current tooling</div>
+                                </td>
+                            </tr>
+                            <!-- Medium Priority -->
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="medium" style="display: table-row;">
+                                <td class="p-6 font-semibold">Panasonic Appliances India</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-surface-container-high text-on-surface-variant">Medium</span>
+                                </td>
+                                <td class="p-6">Senior Manager – Procurement</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Refrigerators, televisions, air
+                                        conditioners (plastic panels, enclosures)</div>
+                                    <div class="mt-1 text-on-surface-variant">Panasonic's commitment to circularity and
+                                        India's requirement of 40% recycled plastic by 2026 make VerdiFLX a turnkey way
+                                        to replace virgin resin in products, satisfying both compliance and consumer
+                                        demand for eco-friendly appliances</div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="medium" style="display: table-row;">
+                                <td class="p-6 font-semibold">Godrej &amp; Boyce</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-surface-container-high text-on-surface-variant">Medium</span>
+                                </td>
+                                <td class="p-6">Director – Procurement</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Fans, air-conditioners,
+                                        refrigerators and storage solutions (plastic grills, frames, panels)</div>
+                                    <div class="mt-1 text-on-surface-variant">Godrej can bolster its "green" credentials
+                                        by using VerdiFLX in appliance components, aligning with India's PWM rules and
+                                        EPR regulations (e.g. for rigid plastic packaging) while hedging against
+                                        volatile virgin-plastic prices</div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="medium" style="display: table-row;">
+                                <td class="p-6 font-semibold">Relaxo Footwear</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-surface-container-high text-on-surface-variant">Medium</span>
+                                </td>
+                                <td class="p-6">Head of Sourcing</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Plastic sandals/flip-flops,
+                                        polymer soles (India's largest footwear maker)</div>
+                                    <div class="mt-1 text-on-surface-variant">VerdiFLX can replace virgin PVC/EVA in
+                                        flip-flop soles and sandals, allowing Relaxo to launch sustainable footwear
+                                        lines. This meets rising consumer demand for eco-products and gives Relaxo a
+                                        unique sustainability story</div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="medium" style="display: table-row;">
+                                <td class="p-6 font-semibold">Berry Global India</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-surface-container-high text-on-surface-variant">Medium</span>
+                                </td>
+                                <td class="p-6">Procurement Manager – Materials</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Plastic bottle caps, closures,
+                                        containers (Global packaging and closures manufacturer)</div>
+                                    <div class="mt-1 text-on-surface-variant">Berry can blend VerdiFLX into its
+                                        injection-molded closures to meet India's tightening recycled-content mandates
+                                        and customer ESG policies, without compromising part performance</div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="medium" style="display: table-row;">
+                                <td class="p-6 font-semibold">Funskool India</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-surface-container-high text-on-surface-variant">Medium</span>
+                                </td>
+                                <td class="p-6">Head of Production</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Injection-molded components
+                                        (Manufacturer of plastic toys and board-game pieces)</div>
+                                    <div class="mt-1 text-on-surface-variant">Funskool can differentiate its toy line by
+                                        using VerdiFLX's high-impact recycled polymer, maintaining durability for toys
+                                        while appealing to eco-conscious parents and aligning with growing environmental
+                                        standards</div>
+                                </td>
+                            </tr>
+                            <!-- Low Priority -->
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="low" style="display: table-row;">
+                                <td class="p-6 font-semibold">Ola Electric</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-surface-container-low text-on-surface-variant">Strategic</span>
+                                </td>
+                                <td class="p-6">Vice President – Procurement</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Plastic fairings, dashboards,
+                                        body panels (Electric scooter OEM)</div>
+                                    <div class="mt-1 text-on-surface-variant">As an EV brand marketing sustainability,
+                                        Ola can incorporate VerdiFLX in its scooter plastics to reinforce its green
+                                        image and proactively comply with future recycled-content mandates in vehicles
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="low" style="display: table-row;">
+                                <td class="p-6 font-semibold">Ather Energy</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-surface-container-low text-on-surface-variant">Strategic</span>
+                                </td>
+                                <td class="p-6">Director – Supply Chain</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Plastic covers, instrument
+                                        panels (Electric scooter maker)</div>
+                                    <div class="mt-1 text-on-surface-variant">Ather's tech-savvy brand could use
+                                        VerdiFLX pellets to amplify its sustainability narrative and get ahead of
+                                        regulatory recycled-plastics targets, while retaining the same fit and finish of
+                                        existing parts</div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="low" style="display: table-row;">
+                                <td class="p-6 font-semibold">Hero Electric</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-surface-container-low text-on-surface-variant">Strategic</span>
+                                </td>
+                                <td class="p-6">Chief Procurement Officer</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Plastic body panels, fairings
+                                        (Electric two-wheeler OEM)</div>
+                                    <div class="mt-1 text-on-surface-variant">Hero Electric can adopt VerdiFLX for bike
+                                        components to align with the Hero Group's carbon-neutral goals and appeal to EV
+                                        buyers, leveraging a drop-in recycled material without redesign</div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="low" style="display: table-row;">
+                                <td class="p-6 font-semibold">Amul (GCMMF)</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-surface-container-low text-on-surface-variant">Strategic</span>
+                                </td>
+                                <td class="p-6">Head of Packaging Procurement</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Plastic milk crates and
+                                        food-grade containers (Dairy cooperative)</div>
+                                    <div class="mt-1 text-on-surface-variant">Amul can use VerdiFLX in its food-grade
+                                        crates and packaging to fulfill India's 40% recycled-content mandate for
+                                        packaging, reinforcing its sustainability leadership in dairy</div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-lowest transition-colors hit-list-row"
+                                data-priority="low" style="display: table-row;">
+                                <td class="p-6 font-semibold">Orient Electric</td>
+                                <td class="p-6"><span
+                                        class="px-3 py-1 rounded-full text-label-sm bg-surface-container-low text-on-surface-variant">Strategic</span>
+                                </td>
+                                <td class="p-6">Vice President – Supply Chain</td>
+                                <td class="p-6 text-on-surface-variant">
+                                    <div class="font-semibold text-primary">Components: Ceiling fans, lights, kitchen
+                                        appliances with plastic parts (Consumer appliances and lighting)</div>
+                                    <div class="mt-1 text-on-surface-variant">By substituting VerdiFLX for virgin
+                                        plastic in fan blades, lamp shades and appliance panels, Orient can meet new
+                                        recycled-plastics regulations and market an eco-friendly product line</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+        <!-- The Tech Stack -->
+        <section class="space-y-12 transition-all duration-700 ease-out opacity-100 translate-y-0" id="tech">
+            <div class="text-center">
+                <h2 class="font-headline-lg text-headline-lg text-primary">The Tech Stack</h2>
+                <p class="text-on-surface-variant">Strategic tools powering the outreach engine</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8">
+                <div class="tech-item cursor-pointer" data-target="tech-prospecting">
+                    <div
+                        class="neumorphic-flat p-6 rounded-lg text-center space-y-4 hover:scale-105 transition-transform">
+                        <div class="w-12 h-12 bg-secondary/10 rounded-lg mx-auto flex items-center justify-center">
+                            <span class="material-symbols-outlined text-secondary">search</span>
+                        </div>
+                        <span class="font-label-md block">Prospecting</span>
+                    </div>
+                </div>
+                <div class="tech-item cursor-pointer" data-target="tech-enrichment">
+                    <div
+                        class="neumorphic-flat p-6 rounded-lg text-center space-y-4 hover:scale-105 transition-transform">
+                        <div class="w-12 h-12 bg-primary/10 rounded-lg mx-auto flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">contacts</span>
+                        </div>
+                        <span class="font-label-md block">Enrichment</span>
+                    </div>
+                </div>
+                <div class="tech-item cursor-pointer" data-target="tech-email-outreach">
+                    <div
+                        class="neumorphic-flat p-6 rounded-lg text-center space-y-4 hover:scale-105 transition-transform">
+                        <div class="w-12 h-12 bg-secondary/10 rounded-lg mx-auto flex items-center justify-center">
+                            <span class="material-symbols-outlined text-secondary">mail</span>
+                        </div>
+                        <span class="font-label-md block">Email Outreach</span>
+                    </div>
+                </div>
+                <div class="tech-item cursor-pointer" data-target="tech-linkedin-outreach">
+                    <div
+                        class="neumorphic-flat p-6 rounded-lg text-center space-y-4 hover:scale-105 transition-transform">
+                        <div class="w-12 h-12 bg-primary/10 rounded-lg mx-auto flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">group</span>
+                        </div>
+                        <span class="font-label-md block">LinkedIn Outreach</span>
+                    </div>
+                </div>
+                <div class="tech-item cursor-pointer" data-target="tech-crm">
+                    <div
+                        class="neumorphic-flat p-6 rounded-lg text-center space-y-4 hover:scale-105 transition-transform">
+                        <div class="w-12 h-12 bg-secondary/10 rounded-lg mx-auto flex items-center justify-center">
+                            <span class="material-symbols-outlined text-secondary">database</span>
+                        </div>
+                        <span class="font-label-md block">CRM</span>
+                    </div>
+                </div>
+                <div class="tech-item cursor-pointer" data-target="tech-automation">
+                    <div
+                        class="neumorphic-flat p-6 rounded-lg text-center space-y-4 hover:scale-105 transition-transform">
+                        <div class="w-12 h-12 bg-primary/10 rounded-lg mx-auto flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">bolt</span>
+                        </div>
+                        <span class="font-label-md block">Automation</span>
+                    </div>
+                </div>
+                <div class="tech-item cursor-pointer" data-target="tech-analytics">
+                    <div
+                        class="neumorphic-flat p-6 rounded-lg text-center space-y-4 hover:scale-105 transition-transform">
+                        <div class="w-12 h-12 bg-secondary/10 rounded-lg mx-auto flex items-center justify-center">
+                            <span class="material-symbols-outlined text-secondary">analytics</span>
+                        </div>
+                        <span class="font-label-md block">Analytics</span>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="max-w-4xl mx-auto">
+                <div class="tech-expand-content active" id="tech-prospecting">
+                    <div class="neumorphic-recessed p-6 rounded-xl border-l-4 border-secondary">
+                        <h4 class="font-label-md text-primary mb-2">Prospecting Tools</h4>
+                        <p class="text-body-md text-on-surface-variant"><strong>LinkedIn Sales Navigator</strong> – Find
+                            companies/contacts by industry, title, location; useful for precisely identifying OEM/Tier-1
+                            auto manufacturers and their procurement leads.<br><strong>Apollo.io</strong> – Search
+                            company databases and purchase verified lists; useful for building a high-quality lead list
+                            based on ICP criteria.</p>
+                    </div>
+                </div>
+                <div class="tech-expand-content" id="tech-enrichment">
+                    <div class="neumorphic-recessed p-6 rounded-xl border-l-4 border-primary">
+                        <h4 class="font-label-md text-primary mb-2">Lead Enrichment</h4>
+                        <p class="text-body-md text-on-surface-variant"><strong>Clearbit (or ZoomInfo)</strong> – Append
+                            details (job title, email) from company domains; useful to verify correct decision-makers
+                            (Head of Procurement/Supply Chain) and obtain direct contact
+                            info.<br><strong>Hunter.io</strong> – Find and verify business email addresses; useful for
+                            ensuring outreach emails reach valid addresses.</p>
+                    </div>
+                </div>
+                <div class="tech-expand-content" id="tech-email-outreach">
+                    <div class="neumorphic-recessed p-6 rounded-xl border-l-4 border-secondary">
+                        <h4 class="font-label-md text-primary mb-2">Email Outreach Automation</h4>
+                        <p class="text-body-md text-on-surface-variant"><strong>Salesloft (or Outreach.io)</strong> –
+                            Manage and automate cold-email sequences; useful for tracking opens/clicks/replies,
+                            scheduling follow-ups, and personalizing at scale.<br><strong>Mailshake (or
+                                Lemlist)</strong> – Lightweight email campaign tool; useful for sending targeted
+                            templates and A/B testing subject lines.</p>
+                    </div>
+                </div>
+                <div class="tech-expand-content" id="tech-linkedin-outreach">
+                    <div class="neumorphic-recessed p-6 rounded-xl border-l-4 border-primary">
+                        <h4 class="font-label-md text-primary mb-2">LinkedIn Outreach Automation</h4>
+                        <p class="text-body-md text-on-surface-variant"><strong>LinkedIn Sales Navigator</strong> –
+                            Enables direct InMail and connection requests to procurement leads; useful as procurement
+                            professionals are active on LinkedIn.<br><strong>Dux-Soup (or Zopto)</strong> – Automate
+                            LinkedIn connection requests and messaging; useful to scale LinkedIn outreach (e.g. sending
+                            personalized invites/follow-ups).</p>
+                    </div>
+                </div>
+                <div class="tech-expand-content" id="tech-crm">
+                    <div class="neumorphic-recessed p-6 rounded-xl border-l-4 border-secondary">
+                        <h4 class="font-label-md text-primary mb-2">CRM Integration</h4>
+                        <p class="text-body-md text-on-surface-variant"><strong>HubSpot CRM (or Salesforce)</strong> –
+                            Track all prospect companies, contacts, outreach activities and deals; useful as a single
+                            source of truth for pipeline and follow-ups.<br><strong>Pipedrive</strong> – Visual deal
+                            pipeline for SMB teams; useful if a simpler, sales-focused CRM is preferred.</p>
+                    </div>
+                </div>
+                <div class="tech-expand-content" id="tech-automation">
+                    <div class="neumorphic-recessed p-6 rounded-xl border-l-4 border-primary">
+                        <h4 class="font-label-md text-primary mb-2">Workflow Automation</h4>
+                        <p class="text-body-md text-on-surface-variant"><strong>Zapier (or Make/Integromat)</strong> –
+                            Connect apps (e.g. form fills → CRM, email replies → CRM tasks); useful to automate data
+                            flow (e.g. new meeting booked → calendar invite, Slack alert).<br><strong>HubSpot
+                                Workflows</strong> – Automate email sequences or lead scoring; useful for automoving
+                            leads through stages (e.g. convert a meeting to "Booked").</p>
+                    </div>
+                </div>
+                <div class="tech-expand-content" id="tech-analytics">
+                    <div class="neumorphic-recessed p-6 rounded-xl border-l-4 border-secondary">
+                        <h4 class="font-label-md text-primary mb-2">Analytics &amp; Reporting</h4>
+                        <p class="text-body-md text-on-surface-variant"><strong>Google Looker Studio (Data
+                                Studio)</strong> – Build custom dashboards for email/LinkedIn KPIs; useful to visualize
+                            the campaign funnel in real time.<br><strong>Tableau (or Power BI)</strong> – Consolidate
+                            data from CRM and outreach tools; useful for high-level executive reports on campaign
+                            performance.<br><strong>CRM Dashboards</strong> – Native reporting (e.g. HubSpot Reports);
+                            useful to monitor targets (emails sent, meetings booked) directly from the CRM.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- The Pitches -->
+        <section class="space-y-12 transition-all duration-700 ease-out opacity-100 translate-y-0" id="pitches">
+            <h2 class="font-headline-lg text-headline-lg text-primary text-center">The Strategic Pitches</h2>
+            <div class="grid md:grid-cols-2 gap-gutter">
+                <div class="neumorphic-flat p-8 rounded-xl space-y-4">
+                    <div class="flex items-center gap-3 text-secondary">
+                        <span class="material-symbols-outlined">mail</span>
+                        <span class="font-label-md">Cold Email Template</span>
+                    </div>
+                    <div
+                        class="neumorphic-recessed p-6 rounded-lg text-on-surface-variant font-body-md leading-relaxed whitespace-pre-line">
+                        <p class="font-bold text-primary mb-4">Subject: [Company]’s PP/PE parts – meet India’s 40%
+                            recycled-content mandate?</p>
+                        Hi [Name],
+
+                        As Head of Procurement at <em>[Company]</em>, you know 40% recycled-content requirements kick in
+                        by 2026. I noticed [Company] makes high-volume plastic parts (dashboards, fuel tanks, etc.) and
+                        likely faces rising pressure to cut emissions and comply with new mandates.
+
+                        VerdiFLX is a drop-in recycled PP/PE material that matches virgin plastic in strength and finish
+                        but contains 50–100% post-consumer recycled content. There’s <strong>no tooling change</strong>
+                        needed, so [Company] can <strong>substitute VerdiFLX</strong> into existing parts to hit India’s
+                        recycled-plastic targets, lower carbon footprint, and strengthen your green brand (no retooling
+                        required).
+
+                        <strong>CTA:</strong> Can we schedule a quick 15-minute call next week to discuss how VerdiFLX
+                        can make [Company]’s supply chain more sustainable without disruption?
+
+                        Best regards,
+                        [Your Name]
+                        [Title], VerdiFLX (by Without®)
+                    </div>
+                </div>
+                <div class="neumorphic-flat p-8 rounded-xl space-y-4">
+                    <div class="flex items-center gap-3 text-primary">
+                        <span class="material-symbols-outlined">link</span>
+                        <span class="font-label-md">LinkedIn Outreach</span>
+                    </div>
+                    <div
+                        class="neumorphic-recessed p-6 rounded-lg text-on-surface-variant font-body-md leading-relaxed whitespace-pre-line">
+                        <p class="font-bold text-primary mb-2">Connection Request:</p>
+                        Hi [Name], I’m [Your Name] from a sustainable materials company. I admire [Company]’s work (and
+                        commitment to greener mobility) and would like to connect with fellow professionals focused on
+                        sustainable sourcing. Looking forward to connecting!
+
+                        <p class="font-bold text-primary mt-4 mb-2">Follow-up Message:</p>
+                        Hi [Name], thanks for connecting! I see you lead Supply Chain at <em>[Company]</em>, which uses
+                        a lot of polypropylene parts. With India’s new 40% recycled-content rule ahead, I thought it’d
+                        be timely to introduce <strong>VerdiFLX</strong> – a high-grade recycled PP/PE that drops in
+                        place of virgin plastic. It requires <em>no new tooling</em> and helps meet mandates while
+                        cutting CO₂. Could we chat for 10–15 min on how this might fit your goals?
+
+                        Best,
+                        [Your Name]
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- The Routine -->
+        <section class="space-y-12 transition-all duration-700 ease-out opacity-100 translate-y-0" id="routine">
+            <div class="text-center">
+                <h2 class="font-headline-lg text-headline-lg text-primary">The 8-Week B2B Playbook Roadmap</h2>
+                <p class="text-on-surface-variant">Strategic plan to book the first B2B meetings</p>
+            </div>
+            <div class="relative pt-12 pb-8 overflow-x-auto no-scrollbar">
+                <div class="min-w-[1000px] px-10">
+                    <div class="relative">
+                        <!-- Progress Line -->
+                        <div
+                            class="absolute h-1 bg-surface-container-high left-[11%] right-[11%] top-8 -translate-y-1/2 z-0">
+                            <div id="progress-bar-fill" class="h-full bg-secondary transition-all duration-500"
+                                style="width: 0%;"></div>
+                        </div>
+                        <!-- Weeks -->
+                        <div class="flex items-start justify-between relative z-10">
+                            <div class="z-10 flex flex-col items-center gap-4 w-[22%]">
+                                <div id="step-circle-0" onclick="setActiveStep(0)"
+                                    class="neumorphic-flat w-16 h-16 rounded-full flex items-center justify-center font-bold text-primary text-lg cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg">
+                                    W1-2</div>
+                                <div class="text-center space-y-2">
+                                    <p class="font-label-md font-bold text-primary">Setup, Scrape &amp; Cold Launch</p>
+                                    <p class="text-xs text-on-surface-variant leading-relaxed">Deploy data scraping,
+                                        clean CRM
+                                        hygiene, and launch a 4-touch cold sequence via Email and LinkedIn.</p>
+                                </div>
+                            </div>
+                            <div class="z-10 flex flex-col items-center gap-4 w-[22%]">
+                                <div id="step-circle-1" onclick="setActiveStep(1)"
+                                    class="neumorphic-flat w-16 h-16 rounded-full flex items-center justify-center font-bold text-primary text-lg cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg">
+                                    W3-4</div>
+                                <div class="text-center space-y-2">
+                                    <p class="font-label-md font-bold text-primary">Pivot &amp; Sample Offer</p>
+                                    <p class="text-xs text-on-surface-variant leading-relaxed">Analyze week-2 metrics,
+                                        pivot
+                                        message angles based on open rates, and explicitly offer a physical sample box
+                                        of
+                                        VerdiFLX pellets for mold testing.</p>
+                                </div>
+                            </div>
+                            <div class="z-10 flex flex-col items-center gap-4 w-[22%]">
+                                <div id="step-circle-2" onclick="setActiveStep(2)"
+                                    class="neumorphic-flat w-16 h-16 rounded-full flex items-center justify-center font-bold text-primary text-lg cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg">
+                                    W5-6</div>
+                                <div class="text-center space-y-2">
+                                    <p class="font-label-md font-bold text-primary">Multi-Channel Push</p>
+                                    <p class="text-xs text-on-surface-variant leading-relaxed">Initiate follow-up calls
+                                        to
+                                        Sourcing Managers regarding sample delivery, and engage targets with LinkedIn
+                                        content/case studies.</p>
+                                </div>
+                            </div>
+                            <div class="z-10 flex flex-col items-center gap-4 w-[22%]">
+                                <div id="step-circle-3" onclick="setActiveStep(3)"
+                                    class="neumorphic-flat w-16 h-16 rounded-full flex items-center justify-center font-bold text-primary text-lg cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg">
+                                    W7-8</div>
+                                <div class="text-center space-y-2">
+                                    <p class="font-label-md font-bold text-primary">Closing &amp; Funnel Review</p>
+                                    <p class="text-xs text-on-surface-variant leading-relaxed">Execute final precision
+                                        follow-ups to book a 15-minute intro call, and hand over a fully populated CRM
+                                        pipeline.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- B2B Sales Performance Command Center -->
+        <section class="space-y-24 transition-all duration-700 ease-out opacity-100 translate-y-0" id="dashboard">
+            <div class="text-center space-y-4">
+                <h2 class="font-headline-lg text-headline-lg text-primary">B2B Sales Performance Command Center</h2>
+                <p class="text-on-surface-variant font-body-lg">Strategic intelligence and optimization framework</p>
+            </div>
+            <!-- 1. KPI Overview (Outbound Conversion Funnel Calculator) -->
+            <div class="space-y-8">
+                <h3 class="font-headline-md text-primary flex items-center gap-3">
+                    <span class="material-symbols-outlined text-secondary">calculate</span>
+                    Outbound Conversion Funnel Calculator
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Email Conversion Funnel Card -->
+                    <div class="neumorphic-flat p-8 rounded-xl space-y-6">
+                        <div class="flex items-center gap-3 text-secondary">
+                            <span class="material-symbols-outlined text-2xl">mail</span>
+                            <h4 class="font-label-md font-bold text-primary text-lg">Email Conversion Funnel</h4>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-label-sm text-on-surface-variant block mb-2 font-semibold">Total
+                                    Emails Sent</label>
+                                <input type="number" id="email-sent" value="185" min="1"
+                                    class="neumorphic-recessed px-4 py-3 rounded-lg w-full border-none focus:outline-none focus:ring-2 focus:ring-secondary text-primary font-body-md bg-[#f6f9ff]" />
+                            </div>
+                            <div>
+                                <label class="text-label-sm text-on-surface-variant block mb-2 font-semibold">Total
+                                    Replies Received</label>
+                                <input type="number" id="email-replies" value="6" min="0"
+                                    class="neumorphic-recessed px-4 py-3 rounded-lg w-full border-none focus:outline-none focus:ring-2 focus:ring-secondary text-primary font-body-md bg-[#f6f9ff]" />
+                            </div>
+                            <div>
+                                <label class="text-label-sm text-on-surface-variant block mb-2 font-semibold">Positive
+                                    Replies</label>
+                                <input type="number" id="email-positive" value="1" min="0"
+                                    class="neumorphic-recessed px-4 py-3 rounded-lg w-full border-none focus:outline-none focus:ring-2 focus:ring-secondary text-primary font-body-md bg-[#f6f9ff]" />
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant">
+                            <div class="text-center p-4 neumorphic-recessed rounded-xl">
+                                <span class="text-label-sm text-on-surface-variant block mb-1">Reply Rate</span>
+                                <span id="email-reply-rate"
+                                    class="font-headline-md text-secondary text-xl font-bold">0.0%</span>
+                            </div>
+                            <div class="text-center p-4 neumorphic-recessed rounded-xl">
+                                <span class="text-label-sm text-on-surface-variant block mb-1">Positive Reply
+                                    Rate</span>
+                                <span id="email-positive-rate"
+                                    class="font-headline-md text-secondary text-xl font-bold">0.0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LinkedIn Conversion Funnel Card -->
+                    <div class="neumorphic-flat p-8 rounded-xl space-y-6">
+                        <div class="flex items-center gap-3 text-primary">
+                            <span class="material-symbols-outlined text-2xl">link</span>
+                            <h4 class="font-label-md font-bold text-primary text-lg">LinkedIn Conversion Funnel</h4>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-label-sm text-on-surface-variant block mb-2 font-semibold">Total
+                                    LinkedIn Messages Sent</label>
+                                <input type="number" id="li-sent" value="50" min="1"
+                                    class="neumorphic-recessed px-4 py-3 rounded-lg w-full border-none focus:outline-none focus:ring-2 focus:ring-secondary text-primary font-body-md bg-[#f6f9ff]" />
+                            </div>
+                            <div>
+                                <label class="text-label-sm text-on-surface-variant block mb-2 font-semibold">Total
+                                    Replies Received</label>
+                                <input type="number" id="li-replies" value="10" min="0"
+                                    class="neumorphic-recessed px-4 py-3 rounded-lg w-full border-none focus:outline-none focus:ring-2 focus:ring-secondary text-primary font-body-md bg-[#f6f9ff]" />
+                            </div>
+                            <div>
+                                <label class="text-label-sm text-on-surface-variant block mb-2 font-semibold">Positive
+                                    Replies</label>
+                                <input type="number" id="li-positive" value="2" min="0"
+                                    class="neumorphic-recessed px-4 py-3 rounded-lg w-full border-none focus:outline-none focus:ring-2 focus:ring-secondary text-primary font-body-md bg-[#f6f9ff]" />
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant">
+                            <div class="text-center p-4 neumorphic-recessed rounded-xl">
+                                <span class="text-label-sm text-on-surface-variant block mb-1">Reply Rate</span>
+                                <span id="li-reply-rate"
+                                    class="font-headline-md text-primary text-xl font-bold">0.0%</span>
+                            </div>
+                            <div class="text-center p-4 neumorphic-recessed rounded-xl">
+                                <span class="text-label-sm text-on-surface-variant block mb-1">Positive Reply
+                                    Rate</span>
+                                <span id="li-positive-rate"
+                                    class="font-headline-md text-primary text-xl font-bold">0.0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 3. Week-2 Optimization Framework -->
+            <div class="space-y-12">
+                <div class="space-y-4">
+                    <h3 class="font-headline-md text-primary flex items-center gap-3">
+                        <span class="material-symbols-outlined text-secondary">schema</span>
+                        Week-2 Optimization Framework
+                    </h3>
+                    <p class="text-on-surface-variant font-body-md">Strategic pivot mechanisms based on real-time
+                        performance data.</p>
+                </div>
+                <div class="w-full">
+                    <!-- Decision-Making Panel -->
+                    <div class="space-y-6">
+                        <div class="neumorphic-flat rounded-xl overflow-hidden">
+                            <div class="bg-surface-container-low p-4 border-b border-outline-variant">
+                                <h4 class="font-label-md text-primary">Decision-Making Panel</h4>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr
+                                            class="text-label-sm text-on-surface-variant border-b border-surface-container">
+                                            <th class="p-6">Metric Underperforming</th>
+                                            <th class="p-6">Target Value</th>
+                                            <th class="p-6">Corrective Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-surface-container">
+                                        <tr>
+                                            <td class="p-6 font-semibold">Email Reply Rate</td>
+                                            <td class="p-6 text-on-surface-variant">&ge;70%</td>
+                                            <td class="p-6 text-body-md">Enhance personalization, shorten copy (100–150
+                                                words), highlight urgent benefit.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-6 font-semibold">Positive Email Reply Rate</td>
+                                            <td class="p-6 text-on-surface-variant">&ge;50%</td>
+                                            <td class="p-6 text-body-md">Refine value proposition/CTA, include
+                                                scheduling link, add offer/testimonial.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-6 font-semibold">LinkedIn Reply Rate</td>
+                                            <td class="p-6 text-on-surface-variant">&ge;90%</td>
+                                            <td class="p-6 text-body-md">Refine the target list to higher-fit leads,
+                                                personalize connection notes and initial messages.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-6 font-semibold">Positive LinkedIn Reply Rate</td>
+                                            <td class="p-6 text-on-surface-variant">&ge;60%</td>
+                                            <td class="p-6 text-body-md">Sharpen the value proposition, offer physical
+                                                sample box of VerdiFLX pellets earlier in the chat.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer
+        class="w-full py-12 bg-surface shadow-[inset_6px_6px_12px_rgba(0,0,0,0.05),inset_-6px_-6px_12px_rgba(255,255,255,0.5)]">
+        <div
+            class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-container-max mx-auto gap-gutter">
+            <div class="font-headline-md text-headline-md text-primary">VerdiFLX</div>
+            <p class="font-body-md text-label-sm text-on-surface-variant">© 2024 VerdiFLX Pellets Research Project. All
+                rights reserved.</p>
+            <div class="flex gap-6">
+                <a class="font-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Privacy
+                    Policy</a>
+                <a class="font-label-sm text-on-surface-variant hover:text-secondary transition-colors"
+                    href="#">Research Methodology</a>
+                <a class="font-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Contact
+                    Support</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Hit List Filtering Logic
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const tableRows = document.querySelectorAll('.hit-list-row');
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter');
+
+                // UI Toggle
+                filterButtons.forEach(b => {
+                    b.classList.remove('neumorphic-flat', 'text-primary');
+                    b.classList.add('text-on-surface-variant');
+                });
+                btn.classList.add('neumorphic-flat', 'text-primary');
+                btn.classList.remove('text-on-surface-variant');
+
+                // Filtering
+                tableRows.forEach(row => {
+                    if (filter === 'all' || row.getAttribute('data-priority') === filter) {
+                        row.style.display = 'table-row';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Tech Stack Expansion Logic
+        const techItems = document.querySelectorAll('.tech-item');
+        const techContents = document.querySelectorAll('.tech-expand-content');
+
+        techItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetId = item.getAttribute('data-target');
+                const targetContent = document.getElementById(targetId);
+                const isCurrentlyActive = targetContent.classList.contains('active');
+
+                // Close others
+                techContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Toggle target
+                if (!isCurrentlyActive) {
+                    targetContent.classList.add('active');
+                }
+            });
+        });
+
+        // ICP Card Expansion
+        const card = document.getElementById('procurement-card');
+        const details = document.getElementById('procurement-details');
+        const icon = document.getElementById('expand-icon');
+
+        icon.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const isExpanded = !details.classList.contains('hidden');
+
+            if (isExpanded) {
+                details.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+                card.classList.remove('neumorphic-recessed');
+                card.classList.add('neumorphic-flat');
+            } else {
+                details.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+                card.classList.remove('neumorphic-flat');
+                card.classList.add('neumorphic-recessed');
+            }
+        });
+
+        // Roadmap Active Step Logic
+        function setActiveStep(index) {
+            const fillPercent = (index / 3) * 100;
+            const progressBarFill = document.getElementById('progress-bar-fill');
+            if (progressBarFill) {
+                progressBarFill.style.width = fillPercent + '%';
+            }
+
+            for (let i = 0; i < 4; i++) {
+                const circle = document.getElementById('step-circle-' + i);
+                if (circle) {
+                    if (i <= index) {
+                        circle.classList.remove('neumorphic-flat', 'text-primary');
+                        circle.classList.add('bg-secondary', 'text-white', 'shadow-lg', 'shadow-secondary/20');
+                    } else {
+                        circle.classList.remove('bg-secondary', 'text-white', 'shadow-lg', 'shadow-secondary/20');
+                        circle.classList.add('neumorphic-flat', 'text-primary');
+                    }
+                }
+            }
+        }
+
+        // Initialize the first step as active on page load
+        setActiveStep(0);
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-700', 'ease-out', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
+
+        // Active Navigation Link Tracking Observer
+        const navLinks = document.querySelectorAll('header nav a');
+        const trackingSections = document.querySelectorAll('section[id]');
+
+        const navObserverOptions = {
+            root: null,
+            rootMargin: '-10% 0px -60% 0px',
+            threshold: 0
+        };
+
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const activeId = entry.target.getAttribute('id');
+                    if (activeId === 'hero') {
+                        navLinks.forEach(link => {
+                            link.classList.remove('text-secondary', 'border-secondary');
+                            link.classList.add('text-on-surface-variant', 'border-transparent', 'hover:text-primary');
+                        });
+                        return;
+                    }
+                    navLinks.forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (href === '#' + activeId) {
+                            link.classList.remove('text-on-surface-variant', 'border-transparent', 'hover:text-primary');
+                            link.classList.add('text-secondary', 'border-secondary');
+                        } else {
+                            link.classList.remove('text-secondary', 'border-secondary');
+                            link.classList.add('text-on-surface-variant', 'border-transparent', 'hover:text-primary');
+                        }
+                    });
+                }
+            });
+        }, navObserverOptions);
+
+        trackingSections.forEach(sec => {
+            navObserver.observe(sec);
+        });
+
+        // Funnel Calculator Logic
+        function updateEmailFunnel() {
+            const sent = parseFloat(document.getElementById('email-sent').value) || 0;
+            const replies = parseFloat(document.getElementById('email-replies').value) || 0;
+            const positive = parseFloat(document.getElementById('email-positive').value) || 0;
+
+            const replyRate = sent > 0 ? (replies / sent) * 100 : 0;
+            const positiveRate = replies > 0 ? (positive / replies) * 100 : 0;
+
+            document.getElementById('email-reply-rate').textContent = replyRate.toFixed(1) + '%';
+            document.getElementById('email-positive-rate').textContent = positiveRate.toFixed(1) + '%';
+        }
+
+        function updateLinkedInFunnel() {
+            const sent = parseFloat(document.getElementById('li-sent').value) || 0;
+            const replies = parseFloat(document.getElementById('li-replies').value) || 0;
+            const positive = parseFloat(document.getElementById('li-positive').value) || 0;
+
+            const replyRate = sent > 0 ? (replies / sent) * 100 : 0;
+            const positiveRate = replies > 0 ? (positive / replies) * 100 : 0;
+
+            document.getElementById('li-reply-rate').textContent = replyRate.toFixed(1) + '%';
+            document.getElementById('li-positive-rate').textContent = positiveRate.toFixed(1) + '%';
+        }
+
+        document.getElementById('email-sent').addEventListener('input', updateEmailFunnel);
+        document.getElementById('email-replies').addEventListener('input', updateEmailFunnel);
+        document.getElementById('email-positive').addEventListener('input', updateEmailFunnel);
+
+        document.getElementById('li-sent').addEventListener('input', updateLinkedInFunnel);
+        document.getElementById('li-replies').addEventListener('input', updateLinkedInFunnel);
+        document.getElementById('li-positive').addEventListener('input', updateLinkedInFunnel);
+
+        updateEmailFunnel();
+        updateLinkedInFunnel();
+    </script>
+</body>
+
+</html>
