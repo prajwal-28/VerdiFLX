@@ -42,16 +42,3 @@ This platform showcases the target Ideal Customer Profile (ICP), prioritizes a t
 * **Functionality**: Pure Vanilla ES6+ Javascript for animation observers, conversion arithmetic, filters, and step progression.
 
 ---
-
-## 💻 Local Preview & Run Instructions
-
-To preview and interact with the application locally:
-
-1. **Serve Files via Python HTTP server**:
-   In your terminal, navigate to the project directory and run:
-   ```bash
-   python -m http.server 8080 --bind 127.0.0.1
-   ```
-
-2. **Open Browser Preview**:
-   Go to: [http://127.0.0.1:8080/modified_screen.html](http://127.0.0.1:8080/modified_screen.html)
